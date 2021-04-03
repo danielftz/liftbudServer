@@ -9,6 +9,7 @@ const requireAuth = require('./middlewares/requireAuth');
 /* basic connecting */
 //core of the express app itself
 const app=express(); 
+const port=3000;
 app.use(bodyParser.json()); //use the json parser BEFORE other routers
 app.use(authRoute);//make the app use the authRoute handler
 
@@ -21,10 +22,12 @@ mongoose.connect(mongoUri,{
     useCreateIndex:true,
     useUnifiedTopology:true,
 });
+
 //connection confirmation
 mongoose.connection.on('connected',()=>{
     console.log('Connected to mongodb instance')
 });
+
 //connection error message
 mongoose.connection.on('error',(error)=>{
     console.error('Error connecting to mongodb',err);
