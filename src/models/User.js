@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 //telling mongoose the properties included in every obj of "users"
 const userSchema = new mongoose.Schema({
