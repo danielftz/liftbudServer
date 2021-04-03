@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser'); //parses json information
 const authRoute = require('./routes/authRoutes');
+const requireAuth = require('./middlewares/requireAuth');
 
 /* basic connecting */
 //core of the express app itself
@@ -32,9 +33,9 @@ mongoose.connection.on('error',(error)=>{
 
 
 
-//When the server is run, every get request gets the res
-app.get('/',(req,res)=>{
-    res.send('Hi there!');
+//When the server is run, every get request gets the res, if requireAuth passes
+app.get('/',requireAuth,(req,res)=>{
+    res.send(`your email: ${req.user.email}`);
 });
 
 app.listen(3000,()=>{
