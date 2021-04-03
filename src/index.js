@@ -37,8 +37,8 @@ mongoose.connection.on('error',(error)=>{
 
 
 //When the server is run, every get request gets the res, if requireAuth passes
-app.get('/',requireAuth,(req,res)=>{
-    res.send(`your email: ${req.user.email}`);
+app.get('/',(req,res)=>{
+    res.send("you are connected");
 });
 
 app.listen(process.env.PORT || port, ()=>{
