@@ -26,15 +26,15 @@ router.post('/signon', async(req,res)=>{
     
     //if email or password empty
     /*future goal: add email and password validation */
-    if (!email || !password) {
-        return res.status(422).send({msg: 'Must provide email and password',email,password});
+    if (!email) {
+        return res.status(401).send({internalErr: "EMPTY_EMAIL", msg: 'Email empty. Do you want to register?'});
     };
 
     const user = await User.findOne({email});
-    //if user already exists
+    //if user doesnt exist
     //prompt user to register in liftbudJS
     if (!user){
-        return res.status(404).send({msg: 'User does not exist',email,password});
+        return res.status(404).send({internalErr: "NO_USER_FOUND", msg: 'User does not exist. Do you want to register?'});
     }
 
     //log in
@@ -45,7 +45,7 @@ router.post('/signon', async(req,res)=>{
         const token = jwt.sign({userId:user._id},'dfang_secret_key')
         res.send({token});
     } catch (err){
-        return res.status(422).send({msg:'Invalid password or email',email,password});
+        return res.status(401).send({internalErr: "NOT_AUTHORIZED", msg:'Invalid password or email'});
     }
 
 })
